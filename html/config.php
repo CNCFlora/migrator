@@ -24,9 +24,9 @@ if($couchdb_ip) {
   define("COUCHDB","http://".$couchdb_ip.":5984");
 }
 
-$elasticsearch_ip=getenv("ELASTICSEARCH_PORT_5984_TCP_ADDR");
+$elasticsearch_ip=getenv("ELASTICSEARCH_PORT_9200_TCP_ADDR");
 if($elasticsearch_ip) {
-  define("ELASTICSEARCH","http://".$elasticsearch_ip.":5984");
+  define("ELASTICSEARCH","http://".$elasticsearch_ip.":9200");
 }
 
 $array = $raw[$env];
