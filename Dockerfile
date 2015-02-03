@@ -21,6 +21,7 @@ EXPOSE 9001
 
 CMD ["supervisord"]
 
+RUN rm /var/www/* -Rf
 ADD . /var/www/
 RUN chown www-data.www-data /var/www/ -Rf
 

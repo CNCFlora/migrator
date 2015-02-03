@@ -1,12 +1,20 @@
 development:
   couchdb: 'http://192.168.50.21:5984'
+  couchdb_url: 'http://192.168.50.21:5984'
   elasticsearch: 'http://192.168.50.21:9200'
   base: ""
 test:
   couchdb: 'http://192.168.50.21:5984'
+  couchdb_url: 'http://192.168.50.21:5984'
   elasticsearch: 'http://192.168.50.21:9200'
   base: ""
+production0:
+  couchdb: 'http://146.134.16.27/couchdb'
+  couchdb_url: 'http://146.134.16.27/couchdb'
+  elasticsearch: 'http://146.134.16.27/elasticsearch'
+  base: "/migrator"
 production:
   couchdb: 'http://cncflora.jbrj.gov.br/couchdb'
+  couchdb_url: 'http://cncflora.jbrj.gov.br/couchdb'
   elasticsearch: 'http://cncflora.jbrj.gov.br/elasticsearch'
   base: "/migrator"

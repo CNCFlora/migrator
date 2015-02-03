@@ -7,7 +7,7 @@ $src = $_POST["src"];
 $dst = $_POST["dst"];
 $spp = $_POST["spp"];
 
-vaR_dump($_POST);
+var_dump($_POST);
 
 $docs=[];
 

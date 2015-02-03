@@ -56,7 +56,7 @@
   </div>
   <script type="text/javascript">
   $.ajax({
-    url: '<?php echo COUCHDB ?>/_all_dbs?callback=?',
+    url: '<?php echo COUCHDB_URL ?>/_all_dbs?callback=?',
     method: 'GET',
     dataType: 'jsonp',
     success: function(dbs) {
