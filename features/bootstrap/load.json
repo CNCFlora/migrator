@@ -1,0 +1,50 @@
+[
+  {
+    "_id":"taxon1",
+    "metadata": { "type":"taxon" },
+    "scientificName":"Foo bar"
+  },
+  {
+    "_id":"taxon2",
+    "metadata": { "type":"taxon" },
+    "scientificName":"Foo baz",
+    "accetedNameUsage":"Foo bar"
+  },
+  {
+    "_id":"taxon3",
+    "metadata": { "type":"taxon" },
+    "scientificName":"Fuz bar"
+  },
+  {
+    "_id":"prof1",
+    "metadata": { "type":"profile" },
+    "foo":"bar",
+    "taxon": {
+      "scientificName":"Foo bar"
+    }
+  },
+  {
+    "_id":"prof2",
+    "metadata": { "type":"profile" },
+    "foo":"baz",
+    "taxon": {
+      "scientificName":"Fuz bar"
+    }
+  },
+  {
+    "_id":"occ1",
+    "metadata": { "type":"occurrence" },
+    "foo":"bar",
+    "taxon": {
+      "scientificName":"Foo bar"
+    }
+  },
+  {
+    "_id":"occ2",
+    "metadata": { "type":"occurrence" },
+    "foo":"baz",
+    "taxon": {
+      "scientificName":"Fuz bar"
+    }
+  }
+]
