@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "docker" do |d|
     d.run "cncflora/elasticsearch", name: "elasticsearch",args: "-p 9200:9200"
-    d.run "cncflora/couchdb", name: "couchdb", args: "-p 5984:5984 --link elasticsearch:elasticsearch -v /var/couchdb:/var/lib/couchdb:rw"
+    d.run "cncflora/couchdb", name: "couchdb", args: "-p 5984:5984 -p 9001:9001 --link elasticsearch:elasticsearch -v /var/couchdb:/var/lib/couchdb:rw"
   end
 
   config.vm.provision :shell, :path => "vagrant.sh"

@@ -1,6 +1,7 @@
 FROM debian:wheezy
 
 RUN sed -i -e 's/http.debian.net/ftp.us.debian.org/g' /etc/apt/sources.list && \
+    sed -i -e 's/httpredir/ftp.us/g' /etc/apt/sources.list && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get install apache2 libapache2-mod-php5 php5 php5-cli php5-curl php5-common php5-sqlite php5-mysql php5-pgsql php5-gd -y && \
@@ -21,6 +22,7 @@ ENV APACHE_PID_FILE /var/apache2.pid
 ENV PHP_ENV production
 
 ADD default.conf /etc/apache2/sites-available/000-default.conf
+ADD default.conf /etc/apache2/sites-available/default
 
 EXPOSE 80
 
