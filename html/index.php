@@ -5,8 +5,15 @@
   <title>Migração</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
   <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="<?php echo CONNECT_URL ?>/js/connect.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    var couchdb = '<?php echo COUCHDB_URL ?>';
+  </script>
+  <script src="app.js" type="text/javascript"></script>
   <style type="text/css">
     .container {
       margin-top: 50px;
@@ -15,9 +22,18 @@
 </head>
 <body>
   <div class="container">
-    <form action="migrate.php" method="POST">
+    <h2>Migração de dados</h2>
+    <?php if( isset($_GET["msg"]) ): ?>
+      <p class="msg label label-success"><?php echo $_GET["msg"] ;?></p>
+    <?php endif;?>
+    <form id="login">
+      <div class='form-group'>
+        <button id="login-bt" class='btn btn-primary'>Login</button>
+        <button id="logout-bt" class='btn btn-primary'>Logout</button>
+      </div>
+    </form>
+    <form action="migrate.php" method="POST" id="app">
       <fieldset class=''>
-        <legend>Migrar dados entre recortes</legend>
         <div class="form-group">
           <label for="spp">Espécie</label>
           <input id="spp" name="spp" type="text" placeholder="Aphelandra longiflora" class='form-control'/>
@@ -54,23 +70,5 @@
       </fieldset>
     </form> 
   </div>
-  <script type="text/javascript">
-  $.ajax({
-    url: '<?php echo COUCHDB_URL ?>/_all_dbs?callback=?',
-    method: 'GET',
-    dataType: 'jsonp',
-    success: function(dbs) {
-      console.log(dbs)
-      for(var d=0;d<dbs.length;d++) {
-        if(!dbs[d].match(/^_/) && !dbs[d].match(/_history$/)) {
-          $("#src,#dst").append("<option value='"+dbs[d]+"'>"+dbs[d].toUpperCase().replace("_"," ")+"</option>");
-        }
-      }
-    },
-    error: function(a,b) {
-      console.log(a,b);
-    }
-  });
-  </script>
 </body>
 </html>
