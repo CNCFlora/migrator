@@ -1,28 +1,21 @@
 development:
-  couchdb: 'http://192.168.50.21:5984'
-  couchdb_url: 'http://192.168.50.21:5984'
-  elasticsearch: 'http://192.168.50.21:9200'
-  connect: 'http://192.168.50.21:8080'
-  connect_url: 'http://192.168.50.21:8080'
+  couchdb: 'http://couchdb:5984'
+  couchdb_url: 'http://localhost:5984'
+  elasticsearch: 'http://elasticsearch:9200'
+  connect: 'http://connect:8080'
+  connect_url: 'http://localhost:8080'
   base: ""
 test:
-  couchdb: 'http://192.168.50.21:5984'
-  couchdb_url: 'http://192.168.50.21:5984'
-  elasticsearch: 'http://192.168.50.21:9200'
-  connect: 'http://192.168.50.21:8080'
-  connect_url: 'http://192.168.50.21:8080'
+  couchdb: 'http://couchdb:5984'
+  couchdb_url: 'http://localhost:5984'
+  elasticsearch: 'http://elasticsearch:9200'
+  connect: 'http://connect:8080'
+  connect_url: 'http://localhost:8080'
   base: ""
-production0:
-  couchdb: 'http://146.134.16.27/couchdb'
-  couchdb_url: 'http://146.134.16.27/couchdb'
-  elasticsearch: 'http://146.134.16.27/elasticsearch'
-  connect: 'http://192.168.50.21:8080'
-  connect_url: 'http://192.168.50.21:8080'
-  base: "/migrator"
 production:
-  couchdb: 'http://cncflora.jbrj.gov.br/couchdb'
-  couchdb_url: 'http://cncflora.jbrj.gov.br/couchdb'
-  elasticsearch: 'http://cncflora.jbrj.gov.br/elasticsearch'
-  connect: 'http://cncflora.jbrj.gov.br/connect'
-  connect_url: 'http://cncflora.jbrj.gov.br/connect'
+  couchdb: 'http://$HOST/couchdb'
+  couchdb_url: 'http://$HOST/couchdb'
+  elasticsearch: 'http://$HOST/elasticsearch'
+  connect: 'http://$HOST/connect'
+  connect_url: 'http://$HOST/connect'
   base: "/migrator"

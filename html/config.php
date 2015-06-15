@@ -16,24 +16,23 @@ if(isset($_SERVER) && isset($_SERVER['HTTP_HOST'])) {
     }
 }
 
-$data["ENV"] = $env;
-$data["TEST"]=($env=='test');
-
-$couchdb_ip=getenv("COUCHDB_PORT_5984_TCP_ADDR");
-if($couchdb_ip) {
-  define("COUCHDB","http://".$couchdb_ip.":5984");
-}
-
-$elasticsearch_ip=getenv("ELASTICSEARCH_PORT_9200_TCP_ADDR");
-if($elasticsearch_ip) {
-  define("ELASTICSEARCH","http://".$elasticsearch_ip.":9200");
-}
+$data["PHP_ENV"] = $env;
 
 $array = $raw[$env];
 
-foreach($array as $k=>$v) {
-  if(!defined(strtoupper($k))) {
-    define(strtoupper($k),$v);
-  }
+foreach($array as $key=>$value) {
+    preg_match_all('/\$([a-zA-Z]+)/',$value,$reg);
+    if(count($reg[0]) >= 1) {
+      $e = getenv($reg[1][0]);
+      $data[strtoupper($key)] = str_replace($reg[0][0],$e,$value);
+    } else {
+      $data[strtoupper($key)] = $value;
+    }
+}
+
+foreach($data as $k=>$v) {
+    if(!defined($k)) {
+        define(strtoupper($k),$v);
+    }
 }
 
