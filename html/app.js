@@ -1,81 +1,108 @@
 window.onload = function() {
 
-  var logged =false;
+  var logged =true;
 
-  $("#logout-bt").hide();
-  $("#app").hide();
+  if(!test) {
+    logged=false;
 
-  Connect({
-      onlogin: function(user) {
-        for(var i =0;i<user.roles.length;i++) {
-          var context = user.roles[i];
-          for(var j=0;j<context.roles.length;j++) {
-            var role = context.roles[j];
-            var role_name = role.role;
-            if(role_name == 'admin') {
-              logged=true;
+    $("#logout-bt").hide();
+    $("#app").hide();
+
+    Connect({
+        onlogin: function(user) {
+          for(var i =0;i<user.roles.length;i++) {
+            var context = user.roles[i];
+            for(var j=0;j<context.roles.length;j++) {
+              var role = context.roles[j];
+              var role_name = role.role;
+              if(role_name == 'admin') {
+                logged=true;
+              }
             }
           }
+          if(logged) {
+            $("#login-bt").hide();
+            $("#logout-bt").show();
+            $("#app").show();
+          }
+        },
+        onlogout: function() {
+          if(logged) {
+            $("#login-bt").show();
+            $("#logout-bt").hide();
+            $("#app").hide();
+          }
         }
-        if(logged) {
-          $("#login-bt").hide();
-          $("#logout-bt").show();
-          $("#app").show();
-        }
-      },
-      onlogout: function() {
-        if(logged) {
-          $("#login-bt").show();
-          $("#logout-bt").hide();
-          $("#app").hide();
-        }
-      }
-  });
+    });
 
-  $("#login").submit(function(){
-      return false;
-  });
-  $("#logout-bt").click(function(){
-      Connect.logout();
-  });
-  $("#login-bt").click(function(){
-      Connect.login();
-  });
-  
-  $("#spp").autocomplete({
-      source: function (request, response) {
-          $.getJSON("complete.php?term="+request.term, function (data) {
-              //processResu.resultlt(data, response, request.term);
-              console.log(data);
-              response(data);
-          });
+    $("#login").submit(function(){
+        return false;
+    });
+    $("#logout-bt").click(function(){
+        Connect.logout();
+    });
+    $("#login-bt").click(function(){
+        Connect.login();
+    });
+  }
+
+  $(".form-group").hide();
+  $("#src").parent().show();
+
+  function get(url,fn) {
+    $.ajax({
+      url: url,
+      method: 'GET',
+      success: function(d) {fn(JSON.parse(d));},
+      error: function(a,b) { console.log(a,b); }
+    });
+  }
+
+  get('dbs.php',
+      function(dbs) {
+        for(var d=0;d<dbs.length;d++) {
+          $("#src").append("<option value='"+dbs[d]+"'>"+dbs[d].toUpperCase().replace("_"," ")+"</option>");
+        }
       }
-  });
-    function processResult(data, callback, searchTerm) {
-      callback(
-        $.map(data, 
-          function (value) {
-            var inputAutocomplete = value.scientificNameWithoutAuthorship.toLowerCase();
-            if( inputAutocomplete.indexOf( searchTerm.toLowerCase() ) != -1 
-                && value.family.length >= 1) {
-                return value = value.scientificNameWithoutAuthorship;
+    );
+
+  $("#src").change(function(){
+      $("#family").parent().show();
+      get('families.php?db='+$("#src").val(),
+        function(families) {
+          for(var i=0;i<families.length;i++) {
+            $("#family").append("<option value='"+families[i]+"'>"+families[i]+"</option>");
+          }
+        }
+      );
+      get('dbs.php',
+          function(dbs) {
+            $("#dst").html("");
+            for(var d=0;d<dbs.length;d++) {
+              if(dbs[d] != $("#src").val()) {
+                $("#dst").append("<option value='"+dbs[d]+"'>"+dbs[d].toUpperCase().replace("_"," ")+"</option>");
+              }
             }
-        }));
-    };
+          }
+        );
+  });
 
-  $.ajax({
-    url: couchdb+'/_all_dbs?callback=?',
-    method: 'GET',
-    dataType: 'jsonp',
-    success: function(dbs) {
-      for(var d=0;d<dbs.length;d++) {
-        if(!dbs[d].match(/^_/) && !dbs[d].match(/_history$/)) {
-          $("#src,#dst").append("<option value='"+dbs[d]+"'>"+dbs[d].toUpperCase().replace("_"," ")+"</option>");
+  $("#family").change(function(){
+      $("#spp").parent().show();
+      get('species.php?db='+$("#src").val()+'&family='+$("#family").val(),
+        function(species) {
+          for(var i=0;i<species.length;i++) {
+            $("#spp").append("<option value='"+species[i]+"'>"+species[i]+"</option>");
+          }
         }
-      }
-    },
-    error: function(a,b) {
-      console.log(a,b);
-    }
+      );
+  });
+
+  $("#spp").change(function(){
+      $("#dst").parent().show();
+  });
+
+  $("#dst").change(function(){
+      $(".form-group").show();
   });
 };

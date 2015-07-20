@@ -22,7 +22,6 @@ function http_delete($url) {
   return json_decode($r);
 }
 
-
 function search($es,$db,$idx,$q) {
   $q = str_replace("=",":",$q);
   $url = $es.'/'.$db.'/'.$idx.'/_search?size=9999&q='.urlencode($q);

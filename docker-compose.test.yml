@@ -1,7 +1,7 @@
-migrator:
+migratorprod:
     image: cncflora/apache
     ports:
-        - 8081:80
+        - 8181:80
     volumes:
         - .:/var/www
     links:
@@ -9,7 +9,7 @@ migrator:
         - connect:connect
         - couchdb:couchdb
     environment:
-        - PHP_ENV=development
+        - PHP_ENV=test
 elasticsearch:
     image: cncflora/elasticsearch
     name: elasticsearch
@@ -31,3 +31,21 @@ connect:
         - "8080:80"
     volumes:
         - "/var/data/connect:/var/floraconnect:rw"
+selenium:
+    image: cncflora/selenium
+    links:
+        - migratorprod:migrator
+    ports:
+        - 4444
+tester:
+    image: cncflora/apache
+    volumes:
+        - .:/var/www
+    links:
+        - elasticsearch:elasticsearch
+        - couchdb:couchdb
+        - selenium:selenium
+        - migratorprod:migrator
+    environment:
+        - PHP_ENV=test
+

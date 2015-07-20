@@ -21,10 +21,29 @@ class FeatureContext extends MinkContext {
 
     /** @BeforeFeature */
     public static function prepareForTheFeature(){
-      // TODO: delete all first
+      @http_delete(ELASTICSEARCH.'/cncflora_test0',[]);
+      @http_delete(ELASTICSEARCH.'/cncflora_test1',[]);
+      @http_delete(COUCHDB.'/cncflora_test0',[]);
+      @http_delete(COUCHDB.'/cncflora_test1',[]);
+
+      @http_put(ELASTICSEARCH.'/cncflora_test0',[]);
+      @http_put(ELASTICSEARCH.'/cncflora_test1',[]);
+      @http_put(COUCHDB.'/cncflora_test0',[]);
+      @http_put(COUCHDB.'/cncflora_test1',[]);
+
       $file =file_get_contents(__DIR__."/load.json");
       $json =json_decode($file);
-      http_post(COUCHDB."/cncflora_test/_bulk_docs",array('docs'=>$json));
+      $r = http_post(COUCHDB."/cncflora_test0/_bulk_docs",array('docs'=>$json));
+      foreach($json as $doc) {
+        $doc->id = $doc->_id;
+        foreach($r as $revs) {
+          if($revs->id == $doc->_id) {
+            $doc->rev = $revs->rev;
+            $doc->_rev = $revs->rev;
+          }
+        }
+        http_put(ELASTICSEARCH.'/cncflora_test0/'.$doc->metadata->type.'/'.$doc->_id,$doc);
+      }
       sleep(1);
     }
 
@@ -34,7 +53,6 @@ class FeatureContext extends MinkContext {
     public function iClickOn($selector) {
         $this->getMainContext()->getSession()->getPage()->find('css',$selector)->click();
     }
-
 
     /**
      * @Then /^I wait (\d+)$/
@@ -49,5 +67,12 @@ class FeatureContext extends MinkContext {
     public function iFillField($sel,$text) {
         $this->getMainContext()->getSession()->executeScript('$("'.$sel.'").val("'.$text.'")');
     }
+    /**
+     * @Then /^I save the page "([^"]*)"$/
+     */
+    public function iSaveThePage($name) {
+        file_put_contents($name,$this->getMainContext()->getSession()->getPage()->getHtml());
+    }
+
 }
 

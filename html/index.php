@@ -5,13 +5,15 @@
   <title>Migração</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
   <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="<?php echo CONNECT_URL ?>/js/connect.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
     var couchdb = '<?php echo COUCHDB_URL ?>';
+    var elasticsearch = '<?php echo ELASTICSEARCH_URL ?>';
+    var test = <?php echo (getenv('PHP_ENV')=='test'?'true':'false') ?>;
   </script>
   <script src="app.js" type="text/javascript"></script>
   <style type="text/css">
@@ -35,12 +37,16 @@
     <form action="migrate.php" method="POST" id="app">
       <fieldset class=''>
         <div class="form-group">
-          <label for="spp">Espécie</label>
-          <input id="spp" name="spp" type="text" placeholder="Aphelandra longiflora" class='form-control'/>
-        </div>
-        <div class="form-group">
           <label for="src">Origem</label>
           <select id="src" name="src" class='form-control'></select>
+        </div>
+        <div class="form-group">
+          <label for="family">Família</label>
+          <select id="family" name="family" class='form-control'></select>
+        </div>
+        <div class="form-group">
+          <label for="spp">Espécie</label>
+          <select id="spp" name="spp" class='form-control'></select>
         </div>
         <div class="form-group">
           <label for="dst">Destino</label>
@@ -50,23 +56,25 @@
           <label for="copy_or_move">Copiar ou mover</label>
           <select id="copy_or_move" name="copy_or_move" class="form-control">
             <option value="copy">Copiar</option>
-            <option value="move">Mover</option>
+            <option value="move" selected>Mover</option>
           </select>
         </div>
         <div class="form-group">
-          <input id="taxon" value="taxon" name="type[]" type="checkbox" />
+          <input id="taxon" value="taxon" name="type[]" type="checkbox" checked />
           <label for="taxon">Taxon</label>
           <br />
-          <input id="occurrences" value="occurrence" name="type[]" type="checkbox" />
+          <input id="occurrences" value="occurrence" name="type[]" type="checkbox" checked />
           <label for="occurrences">Ocorrência</label>
           <br />
-          <input id="profile" value="profile" name="type[]" type="checkbox" />
+          <input id="profile" value="profile" name="type[]" type="checkbox" checked />
           <label for="profile">Perfil</label>
           <br />
-          <input id="assessment" value="assessment" name="type[]" type="checkbox" />
+          <input id="assessment" value="assessment" name="type[]" type="checkbox" checked />
           <label for="assessment">Avaliação</label>
         </div>
-        <p><button class='btn btn-primary'>Migrar</button></p>
+        <div class="form-group">
+          <button type='submit' class='btn btn-primary'>Migrar</button>
+        </div>
       </fieldset>
     </form> 
   </div>
