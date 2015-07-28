@@ -1,5 +1,12 @@
 [
   {
+    "_id":"taxon0",
+    "metadata": { "type":"taxon" },
+    "family":"Foaceae",
+    "taxonomicStatus":"accepted",
+    "scientificNameWithoutAuthorship":"Foo foo"
+  },
+  {
     "_id":"taxon1",
     "metadata": { "type":"taxon" },
     "family":"Foaceae",
@@ -20,6 +27,14 @@
     "family":"Foaceae",
     "taxonomicStatus":"synonym",
     "scientificNameWithoutAuthorship":"Fuz bar"
+  },
+  {
+    "_id":"prof0",
+    "metadata": { "type":"profile" },
+    "foo":"foo",
+    "taxon": {
+      "scientificNameWithoutAuthorship":"Foo foo"
+    }
   },
   {
     "_id":"prof1",

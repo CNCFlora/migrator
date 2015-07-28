@@ -15,9 +15,13 @@ use Behat\Gherkin\Node\PyStringNode,
 
 use Behat\MinkExtension\Context\MinkContext;
 
+use GuzzleHttp\Client;
+
 use cncflora\Utils;
 
 class FeatureContext extends MinkContext {
+
+    private $_response;
 
     /** @BeforeFeature */
     public static function prepareForTheFeature(){
@@ -74,5 +78,43 @@ class FeatureContext extends MinkContext {
         file_put_contents($name,$this->getMainContext()->getSession()->getPage()->getHtml());
     }
 
+
+    /**
+     *  @When /^I request "([^"]*)"$/
+     */
+    public function iRequest($url) {
+        $client = new Client();
+        $this->_response  = $client->get($url,['http_errors'=>false]);
+    }
+
+    /**
+     * @Then /^the response status should be (\d+)$/
+     */
+    public function theResponseStatusCodeShouldBe($httpStatus)
+    {
+        if ((string)$this->_response->getStatusCode() !== $httpStatus) {
+        	throw new \Exception('HTTP code does not match '.$httpStatus.
+        		' (actual: '.$this->_response->getStatusCode().')');
+        }
+    }
+
+    /**
+     * @Then /^the "([^"]*)" property equals "([^"]*)"$/
+     */
+    public function thePropertyEquals($propertyName, $propertyValue)
+    {
+        $data = json_decode($this->_response->getBody(true));
+
+        if (!empty($data)) {
+        	if (!isset($data->$propertyName)) {
+                throw new Exception("Property '".$propertyName."' is not set!\n");
+            }
+            if ($data->$propertyName !== $propertyValue) {
+            	throw new \Exception('Property value mismatch! (given: '.$propertyValue.', match: '.$data->$propertyName.')');
+            }
+        } else {
+            throw new Exception("Response was not JSON\n" . $this->_response->getBody(true));
+        }
+    }
 }
 
