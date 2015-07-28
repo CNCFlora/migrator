@@ -3,10 +3,10 @@ project = migrator
 all: build
 
 install-deps:
-	docker-compose -p $(project) run --no-deps profiles composer install
+	docker-compose -p $(project) run --no-deps migrator  composer install
 
 update-deps:
-	docker-compose -p $(project) run --no-deps profiles composer update
+	docker-compose -p $(project) run --no-deps migrator composer update
 
 run: 
 	docker-compose -p $(project) up
@@ -21,7 +21,7 @@ stop:
 	docker-compose -p $(project) -f docker-compose.test.yml  rm
 
 test:
-	docker-compose -p $(project) -f docker-compose.test.yml start
+	docker-compose -p $(project) -f docker-compose.test.yml up -d
 	docker-compose -p $(project) -f docker-compose.test.yml run tester vendor/bin/behat
 
 build:
