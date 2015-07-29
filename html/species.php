@@ -9,9 +9,10 @@ $family = trim($_GET["family"]);
 $result = search(ELASTICSEARCH,$db,'taxon',"family:\"".$family."\" AND taxonomicStatus:\"accepted\"");
 $names=[];
 foreach($result as $taxon) {
-  $names[] = trim( $taxon->scientificNameWithoutAuthorship);
+  $names[] = trim($taxon->scientificNameWithoutAuthorship);
 }
 
+$names = array_unique($names);
 sort($names);
-echo json_encode(array_unique($names));
+echo json_encode($names);
 

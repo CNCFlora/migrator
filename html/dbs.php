@@ -11,6 +11,7 @@ foreach($r as $db) {
   }
 }
 
+$names = array_unique($names);
 sort($names);
-echo json_encode(array_unique($names));
+echo json_encode($names);
 

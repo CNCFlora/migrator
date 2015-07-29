@@ -30,10 +30,14 @@ function search($es,$db,$idx,$q) {
   $ids = [];
   foreach($r->hits->hits as $hit) {
       $doc = $hit->_source;
-      $doc->_id = $doc->id;
-      $doc->_rev = $doc->rev;
-      unset($doc->id);
-      unset($doc->rev);
+      if(isset($doc->id) && !isset($doc->_id)) {
+        $doc->_id = $doc->id;
+        unset($doc->id);
+      }
+      if(isset($doc->rev) && !isset($doc->_rev)) {
+        $doc->_rev = $doc->rev;
+        unset($doc->rev);
+      }
       $arr[] = $doc;
   }
 

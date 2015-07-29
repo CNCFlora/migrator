@@ -46,7 +46,7 @@ window.onload = function() {
     });
   }
 
-  $(".form-group").hide();
+  $("#app .form-group").hide();
   $("#src").parent().show();
 
   function get(url,fn) {
@@ -58,6 +58,7 @@ window.onload = function() {
     });
   }
 
+  $("#src").html("");
   get('dbs.php',
       function(dbs) {
         for(var d=0;d<dbs.length;d++) {
@@ -68,6 +69,8 @@ window.onload = function() {
 
   $("#src").change(function(){
       $("#family").parent().show();
+      $("#family").html("");
+      $("#dst").html("");
       get('families.php?db='+$("#src").val(),
         function(families) {
           for(var i=0;i<families.length;i++) {
@@ -77,7 +80,6 @@ window.onload = function() {
       );
       get('dbs.php',
           function(dbs) {
-            $("#dst").html("");
             for(var d=0;d<dbs.length;d++) {
               if(dbs[d] != $("#src").val()) {
                 $("#dst").append("<option value='"+dbs[d]+"'>"+dbs[d].toUpperCase().replace("_"," ")+"</option>");
@@ -89,6 +91,7 @@ window.onload = function() {
 
   $("#family").change(function(){
       $("#spp").parent().show();
+      $("#spp").html("");
       get('species.php?db='+$("#src").val()+'&family='+$("#family").val(),
         function(species) {
           for(var i=0;i<species.length;i++) {
@@ -103,6 +106,6 @@ window.onload = function() {
   });
 
   $("#dst").change(function(){
-      $(".form-group").show();
+      $("#app .form-group").show();
   });
 };

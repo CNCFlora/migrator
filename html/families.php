@@ -11,6 +11,7 @@ foreach($result as $taxon) {
   $names[] = strtoupper( trim( $taxon->family ) );
 }
 
+$names = array_unique($names);
 sort($names);
-echo json_encode(array_unique($names));
+echo json_encode($names);
 

@@ -1,5 +1,12 @@
 [
   {
+    "_id":"taxonx",
+    "metadata": { "type":"taxon" },
+    "family":"Baraceae",
+    "taxonomicStatus":"accepted",
+    "scientificNameWithoutAuthorship":"Bar bar"
+  },
+  {
     "_id":"taxon0",
     "metadata": { "type":"taxon" },
     "family":"Foaceae",
@@ -26,7 +33,8 @@
     "metadata": { "type":"taxon" },
     "family":"Foaceae",
     "taxonomicStatus":"synonym",
-    "scientificNameWithoutAuthorship":"Fuz bar"
+    "scientificNameWithoutAuthorship":"Fuz bar",
+    "acceptedNameUsage":"Foo foo"
   },
   {
     "_id":"prof0",

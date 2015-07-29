@@ -11,8 +11,6 @@
   <script src="<?php echo CONNECT_URL ?>/js/connect.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
-    var couchdb = '<?php echo COUCHDB_URL ?>';
-    var elasticsearch = '<?php echo ELASTICSEARCH_URL ?>';
     var test = <?php echo (getenv('PHP_ENV')=='test'?'true':'false') ?>;
   </script>
   <script src="app.js" type="text/javascript"></script>
