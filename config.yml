@@ -10,15 +10,9 @@ test:
   connect: 'http://connect:8080'
   connect_url: 'http://localhost:8080'
   base: ""
-homolog:
-  couchdb: 'http://jb048:5984'
-  elasticsearch: 'http://jb048:9200'
-  connect: 'http://jb048/connect'
-  connect_url: 'http://$HOST/connect'
-  base: "/migrator"
 production:
-  couchdb: 'http://jb049:5984'
-  elasticsearch: 'http://jb049:9200'
-  connect: 'http://jb049/connect'
+  couchdb: 'http://couchdb:5984'
+  elasticsearch: 'http://elasticsearch:9200'
+  connect: 'http://connect:80'
   connect_url: 'http://$HOST/connect'
   base: "/migrator"
