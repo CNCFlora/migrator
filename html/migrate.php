@@ -7,6 +7,11 @@ $src = $_POST["src"];
 $dst = $_POST["dst"];
 $spp = trim( $_POST["spp"] );
 
+if(strlen( $src ) <= 3 || strlen($dst) <= 3 || strlen($spp) <= 3) {
+  header("Location: index.php?msg=Nada selecionado");
+  return;
+}
+
 $synonyms = search(ELASTICSEARCH,$src,"taxon","acceptedNameUsage:\"".$spp."*\" AND taxonomicStatus:\"synonym\"");
 
 $q = '"'.$spp.'*" ';

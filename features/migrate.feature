@@ -83,3 +83,13 @@ Feature: Migrate data between databases
         When I request "http://elasticsearch:9200/cncflora_test0/profile/prof0"
         Then the response status should be 200
 
+  Scenario: Invalid combinations
+        Given I am on "/"
+        And I wait 1000
+        Then I select "--" from "src"
+        And I select "--" from "family"
+        And I select "--" from "spp"
+        And I select "--" from "dst"
+        And I select "Mover" from "copy_or_move"
+        Then I press "Migrar"
+        Then I should see "Nada selecionado"

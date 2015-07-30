@@ -58,7 +58,7 @@ window.onload = function() {
     });
   }
 
-  $("#src").html("");
+  $("#src").html("<option>--</option>");
   get('dbs.php',
       function(dbs) {
         for(var d=0;d<dbs.length;d++) {
@@ -69,8 +69,8 @@ window.onload = function() {
 
   $("#src").change(function(){
       $("#family").parent().show();
-      $("#family").html("");
-      $("#dst").html("");
+      $("#family").html("<option>--</option>");
+      $("#dst").html("<option>--</option>");
       get('families.php?db='+$("#src").val(),
         function(families) {
           for(var i=0;i<families.length;i++) {
@@ -91,7 +91,7 @@ window.onload = function() {
 
   $("#family").change(function(){
       $("#spp").parent().show();
-      $("#spp").html("");
+      $("#spp").html("<option>--</option>");
       get('species.php?db='+$("#src").val()+'&family='+$("#family").val(),
         function(species) {
           for(var i=0;i<species.length;i++) {
