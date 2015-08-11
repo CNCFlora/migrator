@@ -53,7 +53,7 @@ window.onload = function() {
     $.ajax({
       url: url,
       method: 'GET',
-      success: function(d) {fn(JSON.parse(d));},
+      success: function(d) { fn(d); },
       error: function(a,b) { console.log(a,b); }
     });
   }
