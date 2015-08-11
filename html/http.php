@@ -24,7 +24,7 @@ function http_delete($url) {
 
 function search($es,$db,$idx,$q) {
   $q = str_replace("=",":",$q);
-  $url = $es.'/'.$db.'/'.$idx.'/_search?size=9999&q='.urlencode($q);
+  $url = $es.'/'.$db.'/'.$idx.'/_search?size=9999&q='.rawurlencode($q);
   $r = http_get($url);
   $arr =array();
   $ids = [];
