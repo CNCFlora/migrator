@@ -53,8 +53,8 @@
         <div class="form-group">
           <label for="copy_or_move">Copiar ou mover</label>
           <select id="copy_or_move" name="copy_or_move" class="form-control">
-            <option value="copy">Copiar</option>
-            <option value="move" selected>Mover</option>
+            <option value="copy" selected>Copiar</option>
+            <option value="move">Mover</option>
           </select>
         </div>
         <div class="form-group">
